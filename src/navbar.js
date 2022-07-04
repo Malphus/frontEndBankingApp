@@ -11,7 +11,7 @@ export default function NavBar(){
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav">
                     <li className="nav-item">                        
-                        <NavLink className="nav-link" to="/CreateAccount/">Create Account</NavLink>
+                        <NavLink className="nav-link" to="/create-account/">Create Account</NavLink>
                     </li>                    
                     <li className="nav-item">
                         <NavLink className="nav-link" to="/deposit/">Deposit</NavLink>                        
@@ -20,7 +20,7 @@ export default function NavBar(){
                         <NavLink className="nav-link" to="/withdraw/">Withdraw</NavLink>                        
                     </li>
                     <li className="nav-item">
-                        <NavLink className="nav-link" to="/alldata/">All Data</NavLink>                        
+                        <NavLink className="nav-link" to="/all-data/">All Data</NavLink>                        
                     </li>
                 </ul>
             </div>

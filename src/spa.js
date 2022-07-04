@@ -26,12 +26,10 @@ export default function Spa() {
         <div className="container">
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/CreateAccount/" exact element={<CreateAccount />} />
-            {/* <Route path="/login/" exact element={<Login />} /> */}
+            <Route path="/create-account/" exact element={<CreateAccount />} />
             <Route path="/deposit/" exact element={<Deposit />} />
             <Route path="/withdraw/" exact element={<Withdraw />} />
-            {/* <Route path="/balance/" exact element={<Balance />} /> */}
-            <Route path="/alldata/" exact element={<AllData />} />
+            <Route path="/all-data/" exact element={<AllData />} />
           </Routes>
         </div>
       </UserContext.Provider>
