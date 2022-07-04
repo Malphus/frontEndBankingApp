@@ -1,30 +1,40 @@
-import React from "react";
+import {useContext, useEffect, useState} from "react";
 import Card from "../card";
 import { UserContext } from "../context";
 
 export default function CreateAccount() {
-  const [show, setShow] = React.useState(true);
-  const [status, setStatus] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const ctx = React.useContext(UserContext);
+  const {addUser} = useContext(UserContext);
+  const [show, setShow] = useState(true);
+  const [status, setStatus] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [disableSubmit, setDisableSubmit] = useState(true)
+
+  useEffect(() => {
+    if (name.length > 0 || email.length > 0 || password.length > 0) {
+      setDisableSubmit(false)
+    } else {
+      setDisableSubmit(true)
+    }
+  }, [name, email, password])
 
   function validate(field, label) {
     if (!field) {
-      setStatus("Error" + label);
+      setStatus("Error " + label);
       setTimeout(() => setStatus(""), 3000);
       return false;
     }
     return true;
   }
 
+  // TODO: change return to handle failure better
   function handleCreate() {
     console.log(name, email, password);
     if (!validate(name, "name")) return;
     if (!validate(email, "email")) return;
     if (!validate(password, "password")) return;
-    ctx.users.push({ name, email, password, balnce: 100 });
+    addUser({ name, email, password });
     setShow(false);
   }
 
@@ -77,8 +87,9 @@ export default function CreateAccount() {
                 />  
             </div>
             <button
+              disabled={disableSubmit}
               type="submit"
-              className="btn btn-light"
+              className="btn btn-light my-3"
               onClick={handleCreate}
             >
               Create Account

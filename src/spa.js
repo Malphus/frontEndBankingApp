@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./navbar";
-import { UserContext } from "./context";
+import UserProvider from "./context";
 import Home from "./home";
 import AllData from "./pages/allData";
 import CreateAccount from "./pages/createAccount";
@@ -11,24 +11,7 @@ export default function Spa() {
   return (
     <BrowserRouter>
       <NavBar />
-      <UserContext.Provider
-        value={{
-          users: [
-            {
-              name: "Mandy",
-              email: "mandy.rugam@gmail.com",
-              password: "secret",
-              balance: 100,
-            },
-            {
-              name: "Jarrod",
-              email: "jvandoren@gmail.com",
-              password: "double-secret",
-              balance: 100,
-            },
-          ],
-        }}
-      >
+      <UserProvider>
         <div className="container">
           <Routes>
             <Route path="/" exact element={<Home />} />
@@ -38,7 +21,7 @@ export default function Spa() {
             <Route path="/all-data/" exact element={<AllData />} />
           </Routes>
         </div>
-      </UserContext.Provider>
+        </UserProvider>
     </BrowserRouter>
   );
 }
