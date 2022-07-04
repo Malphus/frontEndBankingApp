@@ -20,6 +20,12 @@ export default function Spa() {
               password: "secret",
               balance: 100,
             },
+            {
+              name: "Jarrod",
+              email: "jvandoren@gmail.com",
+              password: "double-secret",
+              balance: 100,
+            },
           ],
         }}
       >
