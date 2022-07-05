@@ -17,14 +17,6 @@ export default function Deposit() {
   const [success, setSuccess] = useState(false);  
   const [amount, setAmount] = useState("");
   const [disableSubmit, setDisableSubmit] = useState(true);
-  const [currentBalance, setCurrentBalance] = useState(0);
-
-//   useEffect(() => {
-//     if (getUserBalance !== currentBalance) {
-//       setCurrentBalance(getUserBalance);
-//     }
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [selectedUser]);
 
   useEffect(() => {
     if (selectedUser !== "" && amount > 0) {
@@ -63,7 +55,7 @@ export default function Deposit() {
   };
 
   const handleDeposit = () => {
-    const user = getUser(selectedUser);
+    const user = getUser();
     const cents = dollarsToCents(amount);
     depositFunds(user, cents);
     setStatus(`$${displayMoney(cents)} added to account for ${user.name}`);
