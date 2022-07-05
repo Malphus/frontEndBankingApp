@@ -1,48 +1,59 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import User from "./User";
 
 export const UserContext = React.createContext(null);
 
-const initialUsers = [
-    {
-      name: "Mandy",
-      email: "mandy.rugam@gmail.com",
-      password: "secret",
-      balance: 100,
-    },
-    {
-      name: "Jarrod",
-      email: "jvandoren@gmail.com",
-      password: "double-secret",
-      balance: 100,
-    },
-  ]
+const user1 = new User({
+  name: "Mandy",
+  email: "mandy.rugam@gmail.com",
+  password: "secret",
+});
+
+const user2 = new User({
+  name: "Jarrod",
+  email: "jvandoren@gmail.com",
+  password: "double-secret",
+});
 
 export default function UserProvider({ children }) {
-    const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState({ [user1.id]: user1, [user2.id]: user2 });
+  const [selectedUser, setSelectedUser] = useState("");
 
-    const addUser = (userData) => {
-        const newUser = new User(userData)
-        setUsers([...users, newUser])
-    }
+  const addUser = (userData) => {
+    const newUser = new User(userData);
+    setUsers({ ...users, [newUser.id]: newUser });
+  };
 
-    const addFunds = (user, amount) => {
-        if (amount < 0) return;
-        user.balance += amount
-    }
+  const depositFunds = (user, amount) => {
+    if (amount < 0) return;
+    user.addFunds(amount);
+  };
 
-    const removeFunds = (user, amount) => {
-        if (amount > user.balance) return;
-        user.balance -= amount
-    }
+  const withdrawFunds = (user, amount) => {
+    if (amount > user.balance) return;
+    user.removeFunds(amount);
+  };
 
-    return (
+  const userList = () => {
+    return Object.entries(users).map(([userId, user]) => [userId, user.name]);
+  };
+
+  const getUser = () => users[selectedUser];
+
+  const getUserBalance = () => getUser()?.balance || 0;
+
+  return (
     <UserContext.Provider
       value={{
-        addFunds,
-        addUser, 
-        removeFunds,   
+        addUser,
+        depositFunds,
+        getUser,
+        getUserBalance,
+        selectedUser,
+        setSelectedUser,
+        userList,
         users,
+        withdrawFunds,
       }}
     >
       {children}

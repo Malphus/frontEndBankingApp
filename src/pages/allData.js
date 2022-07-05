@@ -2,7 +2,7 @@ import React from 'react'
 import { UserContext } from '../context';
 
 export default function AllData() {
-    const ctx = React.useContext(UserContext);
+    const {users} = React.useContext(UserContext);
     return (
         <>
             <h1>All Data</h1>
@@ -15,8 +15,8 @@ export default function AllData() {
                     </tr>
                 </thead>
                 <tbody>
-                    {ctx.users.map(({ email, name, password }) => (
-                        <tr key={email}>
+                    {Object.entries(users).map(([_, { email, id, name, password }]) => (
+                        <tr key={id}>
                             <td>{name}</td>
                             <td>{email}</td>
                             <td>{password}</td>

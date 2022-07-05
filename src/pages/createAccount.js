@@ -6,6 +6,8 @@ export default function CreateAccount() {
   const {addUser} = useContext(UserContext);
   const [show, setShow] = useState(true);
   const [status, setStatus] = useState("");
+  const [err, setErr] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,20 +23,29 @@ export default function CreateAccount() {
 
   function validate(field, label) {
     if (!field) {
+      setErr(true)
       setStatus("Error " + label);
-      setTimeout(() => setStatus(""), 3000);
+      setTimeout(() => {
+        setStatus("")
+        setErr(false)
+      }, 3000);
       return false;
     }
     return true;
   }
 
   // TODO: change return to handle failure better
-  function handleCreate() {
-    console.log(name, email, password);
+  function handleCreate() {    
     if (!validate(name, "name")) return;
     if (!validate(email, "email")) return;
     if (!validate(password, "password")) return;
     addUser({ name, email, password });
+    setSuccess(true)
+    setStatus(`User ${name} successfully created.`);
+    setTimeout(() => {
+      setStatus("")
+      setSuccess(false)
+    }, 3000);
     setShow(false);
   }
 
@@ -50,6 +61,8 @@ export default function CreateAccount() {
       bgcolor="primary"
       header="Create Account"
       status={status}
+      err={err}
+      success={success}
       body={
         show ? (
           <>
